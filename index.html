@@ -342,10 +342,6 @@ body{font-family:var(--font);color:var(--text);}
       <div class="field-label">Claude API Key</div>
       <input class="app-input" id="apikey-input" type="password" placeholder="sk-ant-...">
     </div>
-    <div class="field-group">
-      <div class="field-label">Google Apps Script URL</div>
-      <input class="app-input" id="gas-input" type="url" placeholder="https://script.google.com/macros/s/...">
-    </div>
     <button class="submit-btn" onclick="saveSettings()">儲存設定</button>
 
     <div style="background:var(--bg2);border-radius:12px;padding:12px 14px;border:0.5px solid var(--border);">
@@ -409,7 +405,7 @@ const PAY_COLORS = ['#7c6ff7','#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa',
 const CATS = ['食','衣','住','行','育','樂','其他'];
 
 let records = [];
-let settings = {budget:20000, apiKey:'', gasUrl:''};
+let settings = {budget:20000, apiKey:'', gasUrl:'__GAS_URL__'};
 let currentFilter = '全部';
 let calcExpr = '', calcResult = '0';
 
