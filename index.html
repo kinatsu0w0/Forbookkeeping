@@ -344,28 +344,6 @@ body{font-family:var(--font);color:var(--text);}
     </div>
     <button class="submit-btn" onclick="saveSettings()">儲存設定</button>
 
-    <div style="background:var(--bg2);border-radius:12px;padding:12px 14px;border:0.5px solid var(--border);">
-      <div style="font-size:11px;color:var(--text3);margin-bottom:6px;">Apps Script 程式碼（複製貼上）</div>
-      <pre style="font-size:10px;color:var(--accent2);white-space:pre-wrap;line-height:1.6;font-family:monospace;">function doPost(e) {
-  var sheet = SpreadsheetApp
-    .getActiveSpreadsheet()
-    .getActiveSheet();
-  var data = JSON.parse(
-    e.postData.contents
-  );
-  data.transactions.forEach(function(r) {
-    sheet.appendRow([
-      r.date, r.transactionType,
-      r.mainCategory, r.subCategory,
-      r.description, r.amount,
-      r.paymentMethod, r.note, r.tag
-    ]);
-  });
-  return ContentService
-    .createTextOutput('OK');
-}</pre>
-    </div>
-
     <div style="height:1px;background:var(--border);margin:4px 0;"></div>
     <button class="submit-btn" style="background:var(--bg3);color:var(--red);" onclick="clearData()">清除所有本機資料</button>
   </div>
