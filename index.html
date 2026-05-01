@@ -349,6 +349,20 @@ body{font-family:var(--font);color:var(--text);}
   </div>
 </div>
 
+  <div class="field-group">
+  <div class="field-label">Claude API 本月用量（估算）</div>
+  <div style="background:var(--bg2);border-radius:12px;padding:14px;border:0.5px solid var(--border);">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px;">
+      <span id="token-month-display">本月 0 tokens</span>
+      <span id="token-total-display">累計 0 tokens</span>
+    </div>
+    <div style="height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;">
+      <div id="token-bar" style="height:100%;border-radius:99px;background:var(--accent);width:0%;transition:width 0.4s;"></div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:6px;" id="token-cost">估算費用：$0.000 USD</div>
+  </div>
+</div>
+
 <!-- NAV BAR -->
 <div class="nav-bar">
   <button class="nav-btn active" onclick="showPage('home',this)">
@@ -402,6 +416,14 @@ function load() {
   updateSubCats();
   renderHome();
   renderRecords();
+  // 強制同步所有初始UI狀態
+  updateSubCats();
+  renderHome();
+  renderRecords();
+  
+  // 強制觸發主分類預設選中狀態
+  const defaultMainCat = document.querySelector('#main-cat-chips .chip.active');
+  if(defaultMainCat) updateSubCats();
 }
 
 function saveSettings() {
@@ -429,6 +451,7 @@ function showPage(id, btn) {
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
   if(id==='records') renderRecords();
+  if(id === 'settings') renderTokenUsage();
 }
 
 // ── CALCULATOR ──
@@ -542,6 +565,21 @@ async function submitAI() {
   } finally {
     btn.disabled=false; btn.textContent='✦ AI 解析並記帳';
   }
+  // 累計token用量
+  const usage = data.usage || {};
+  const inputTokens = usage.input_tokens || 0;
+  const outputTokens = usage.output_tokens || 0;
+  const totalNew = inputTokens + outputTokens;
+  
+  let tokenLog = JSON.parse(localStorage.getItem('token_usage') || '{"total":0,"month":0,"monthKey":""}');
+  const monthKey = new Date().toISOString().slice(0,7); // "2025-01"
+  if(tokenLog.monthKey !== monthKey) {
+    tokenLog.month = 0;
+    tokenLog.monthKey = monthKey;
+  }
+  tokenLog.total += totalNew;
+  tokenLog.month += totalNew;
+  localStorage.setItem('token_usage', JSON.stringify(tokenLog));
 }
 
 // ── SAVE ──
@@ -674,6 +712,24 @@ function toast(msg) {
   t.textContent = msg;
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2500);
+}
+  function renderTokenUsage() {
+  const MONTH_LIMIT = 50000; // 自行設定警示上限
+  // claude-sonnet 約 $3/MTok input, $15/MTok output（粗估平均$5/MTok）
+  const COST_PER_TOKEN = 0.000005;
+
+  let tokenLog = JSON.parse(localStorage.getItem('token_usage') || '{"total":0,"month":0,"monthKey":""}');
+  const monthKey = new Date().toISOString().slice(0,7);
+  if(tokenLog.monthKey !== monthKey) tokenLog.month = 0;
+
+  const pct = Math.min(100, Math.round(tokenLog.month / MONTH_LIMIT * 100));
+  const cost = (tokenLog.total * COST_PER_TOKEN).toFixed(3);
+
+  document.getElementById('token-month-display').textContent = `本月 ${tokenLog.month.toLocaleString()} tokens`;
+  document.getElementById('token-total-display').textContent = `累計 ${tokenLog.total.toLocaleString()} tokens`;
+  document.getElementById('token-bar').style.width = pct + '%';
+  document.getElementById('token-bar').style.background = pct > 80 ? 'var(--red)' : pct > 60 ? 'var(--amber)' : 'var(--accent)';
+  document.getElementById('token-cost').textContent = `估算費用：$${cost} USD`;
 }
 
 load();
