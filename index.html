@@ -764,7 +764,7 @@ function toast(msg) {
   document.getElementById('token-cost').textContent = `估算費用：$${cost} USD`;
 }
 
-load();
+document.addEventListener('DOMContentLoaded', () => { load(); });
 </script>
 </body>
 </html>
