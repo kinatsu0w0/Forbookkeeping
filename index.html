@@ -418,7 +418,6 @@ async function load() {
   // 3. 更新 UI 欄位
   document.getElementById('budget-input').value = settings.budget||20000;
   document.getElementById('apikey-input').value = settings.apiKey||'';
-  document.getElementById('gas-input').value = settings.gasUrl||'';
   if(settings.apiKey) document.getElementById('config-banner').style.display='none';
   const d = new Date();
   document.getElementById('date-input').value = d.toISOString().split('T')[0];
