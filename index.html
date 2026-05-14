@@ -173,6 +173,7 @@ body{font-family:var(--font);color:var(--text);}
       </div>
       <div class="progress-bar-bg"><div class="progress-bar-fill" id="budget-bar" style="width:0%"></div></div>
       <div class="budget-pct" id="budget-pct">剩餘 NT$20,000 (100%)</div>
+      <div id="daily-budget" style="font-size:11px;color:var(--text2);margin-top:3px;text-align:right;"></div>
     </div>
   </div>
 
@@ -402,7 +403,7 @@ let currentFilter = '全部';
 let calcExpr = '', calcResult = '0';
 
 // ── INIT ──
-function load() {
+async function load() {
   try { records = JSON.parse(localStorage.getItem('acc_records')||'[]'); } catch(e){records=[];}
   try { const s = JSON.parse(localStorage.getItem('acc_settings')||'{}'); settings={...settings,...s}; } catch(e){}
   document.getElementById('budget-input').value = settings.budget||20000;
@@ -414,16 +415,32 @@ function load() {
   const mn=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
   document.getElementById('home-month').textContent = d.getFullYear()+'年'+mn[d.getMonth()]+'月';
   updateSubCats();
-  renderHome();
+  renderHome(); // 先用本機資料顯示
   renderRecords();
-  // 強制同步所有初始UI狀態
-  updateSubCats();
-  renderHome();
-  renderRecords();
-  
-  // 強制觸發主分類預設選中狀態
-  const defaultMainCat = document.querySelector('#main-cat-chips .chip.active');
-  if(defaultMainCat) updateSubCats();
+
+  // 從 Google Sheet 同步當月資料
+  if(settings.gasUrl && settings.gasUrl !== '__GAS_URL__') {
+    try {
+      const res = await fetch(settings.gasUrl, {method:'GET'});
+      const json = await res.json();
+      if(json.transactions && json.transactions.length > 0) {
+        // 合併：以 Sheet 為主，排除本機已有的重複（以 date+description+amount 為 key）
+        const sheetRecs = json.transactions;
+        const localKeys = new Set(records.map(r=>`${r.date}|${r.description}|${r.amount}`));
+        const newFromSheet = sheetRecs.filter(r=>!localKeys.has(`${r.date}|${r.description}|${r.amount}`));
+        if(newFromSheet.length > 0) {
+          records = [...records, ...newFromSheet];
+          localStorage.setItem('acc_records', JSON.stringify(records));
+          toast(`已從 Sheet 同步 ${newFromSheet.length} 筆`);
+        }
+        renderHome();
+        renderRecords();
+      }
+    } catch(e) {
+      console.warn('Sheet 同步失敗', e);
+      // 靜默失敗，不打擾使用者
+    }
+  }
 }
 
 function saveSettings() {
@@ -615,6 +632,12 @@ function renderHome() {
   const bar = document.getElementById('budget-bar');
   bar.style.width = pct+'%';
   bar.className = 'progress-bar-fill'+(pct>=100?' over':pct>=80?' warn':'');
+  // 平均每日預算（第618行之後）
+  const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
+  const daysLeft = daysInMonth - now.getDate() + 1; // 含今天
+  const dailyBudget = remain > 0 ? Math.floor(remain / daysLeft) : 0;
+  document.getElementById('daily-budget').textContent =
+  `每日可用 NT$${dailyBudget.toLocaleString()}（剩 ${daysLeft} 天）`;
   document.getElementById('budget-pct').textContent = '剩餘 NT$'+Math.max(0,remain).toLocaleString()+' ('+(100-pct<0?0:100-pct)+'%)';
   document.getElementById('donut-pct').textContent = pct+'%';
 
