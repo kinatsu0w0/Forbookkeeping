@@ -242,8 +242,8 @@ body{font-family:var(--font);color:var(--text);}
     <div class="field-group">
       <div class="field-label">交易類型</div>
       <div class="chip-row" id="type-chips">
-        <div class="chip active" onclick="selectChip(this,'type-chips');updateSubCats()">支出</div>
-        <div class="chip" onclick="selectChip(this,'type-chips');updateSubCats()">收入</div>
+        <div class="chip active" onclick="selectChip(this,'type-chips');rebuildMainCats();updateSubCats()">支出</div>
+        <div class="chip" onclick="selectChip(this,'type-chips');rebuildMainCats();updateSubCats()">收入</div>
       </div>
     </div>
 
@@ -430,6 +430,7 @@ async function load() {
   document.getElementById('date-input').value = d.toISOString().split('T')[0];
   const mn=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
   document.getElementById('home-month').textContent = d.getFullYear()+'年'+mn[d.getMonth()]+'月';
+  rebuildMainCats();
   updateSubCats();
 
   // 4. 先用本機資料渲染
@@ -517,20 +518,21 @@ function getChip(groupId) {
   const a = document.getElementById(groupId)?.querySelector('.chip.active');
   return a ? a.textContent : '';
 }
-function updateSubCats() {
+function rebuildMainCats() {
   const type = getChip('type-chips');
   const isIncome = type === '收入';
-  
-  // 切換主分類選項
-  const mainChips = document.getElementById('main-cat-chips');
   const cats = isIncome ? INCOME_CATS : CATS;
+  const mainChips = document.getElementById('main-cat-chips');
   mainChips.innerHTML = cats.map((c,i) =>
     `<div class="chip${i===0?' active':''}" onclick="selectChip(this,'main-cat-chips');updateSubCats()">${c}</div>`
   ).join('');
+}
 
-  // 切換子分類選項
-  const mc = getChip('main-cat-chips') || cats[0];
+function updateSubCats() {
+  const type = getChip('type-chips');
+  const isIncome = type === '收入';
   const subMap = isIncome ? INCOME_SUB_CATS : SUB_CATS;
+  const mc = getChip('main-cat-chips');
   const subs = subMap[mc] || [];
   const el = document.getElementById('sub-cat-chips');
   el.innerHTML = subs.map((s,i) =>
@@ -538,7 +540,6 @@ function updateSubCats() {
   ).join('');
   document.getElementById('sub-cat-section').style.display = subs.length ? 'flex' : 'none';
 }
-
 // ── AI TOGGLE ──
 function toggleAI() {
   const p = document.getElementById('ai-panel');
