@@ -242,8 +242,8 @@ body{font-family:var(--font);color:var(--text);}
     <div class="field-group">
       <div class="field-label">交易類型</div>
       <div class="chip-row" id="type-chips">
-        <div class="chip active" onclick="selectChip(this,'type-chips')">支出</div>
-        <div class="chip" onclick="selectChip(this,'type-chips')">收入</div>
+        <div class="chip active" onclick="selectChip(this,'type-chips');updateSubCats()">支出</div>
+        <div class="chip" onclick="selectChip(this,'type-chips');updateSubCats()">收入</div>
       </div>
     </div>
 
@@ -392,6 +392,13 @@ const SUB_CATS = {
   '樂':['月野家','遊戲課金','小說／漫畫','同人本','電影','舞台劇／音樂劇','周邊','街機'],
   '其他':['規費','醫藥費','儲值']
 };
+const INCOME_CATS = ['被動收入','薪資','意外收入','其他'];
+const INCOME_SUB_CATS = {
+  '被動收入':['股利股息'],
+  '薪資':['薪資','獎金','加班費'],
+  '意外收入':['發票中獎','刮刮樂／樂透'],
+  '其他':['還款']
+};
 const CAT_ICONS = {'食':'🍜','衣':'👗','住':'🏠','行':'🚌','育':'📚','樂':'🎮','其他':'📌'};
 const CAT_COLORS = ['#7c6ff7','#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#34d399'];
 const PAY_COLORS = ['#7c6ff7','#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#34d399','#fb923c'];
@@ -511,10 +518,24 @@ function getChip(groupId) {
   return a ? a.textContent : '';
 }
 function updateSubCats() {
-  const mc = getChip('main-cat-chips') || '食';
-  const subs = SUB_CATS[mc] || [];
+  const type = getChip('type-chips');
+  const isIncome = type === '收入';
+  
+  // 切換主分類選項
+  const mainChips = document.getElementById('main-cat-chips');
+  const cats = isIncome ? INCOME_CATS : CATS;
+  mainChips.innerHTML = cats.map((c,i) =>
+    `<div class="chip${i===0?' active':''}" onclick="selectChip(this,'main-cat-chips');updateSubCats()">${c}</div>`
+  ).join('');
+
+  // 切換子分類選項
+  const mc = getChip('main-cat-chips') || cats[0];
+  const subMap = isIncome ? INCOME_SUB_CATS : SUB_CATS;
+  const subs = subMap[mc] || [];
   const el = document.getElementById('sub-cat-chips');
-  el.innerHTML = subs.map((s,i)=>`<div class="chip${i===0?' active':''}" onclick="selectChip(this,'sub-cat-chips')">${s}</div>`).join('');
+  el.innerHTML = subs.map((s,i) =>
+    `<div class="chip${i===0?' active':''}" onclick="selectChip(this,'sub-cat-chips')">${s}</div>`
+  ).join('');
   document.getElementById('sub-cat-section').style.display = subs.length ? 'flex' : 'none';
 }
 
