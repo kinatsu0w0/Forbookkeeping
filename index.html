@@ -173,7 +173,6 @@ body{font-family:var(--font);color:var(--text);}
       </div>
       <div class="progress-bar-bg"><div class="progress-bar-fill" id="budget-bar" style="width:0%"></div></div>
       <div class="budget-pct" id="budget-pct">剩餘 NT$20,000 (100%)</div>
-      <div id="daily-budget" style="font-size:11px;color:var(--text2);margin-top:3px;text-align:right;"></div>
     </div>
   </div>
 
@@ -242,8 +241,8 @@ body{font-family:var(--font);color:var(--text);}
     <div class="field-group">
       <div class="field-label">交易類型</div>
       <div class="chip-row" id="type-chips">
-        <div class="chip active" onclick="selectChip(this,'type-chips');rebuildMainCats();updateSubCats()">支出</div>
-        <div class="chip" onclick="selectChip(this,'type-chips');rebuildMainCats();updateSubCats()">收入</div>
+        <div class="chip active" onclick="selectChip(this,'type-chips')">支出</div>
+        <div class="chip" onclick="selectChip(this,'type-chips')">收入</div>
       </div>
     </div>
 
@@ -272,11 +271,9 @@ body{font-family:var(--font);color:var(--text);}
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">台新信用卡</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">玉山信用卡</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">現金</div>
-        <div class="chip" onclick="selectChip(this,'pay-method-chips')">台新銀行</div>
+        <div class="chip" onclick="selectChip(this,'pay-method-chips')">台新</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">郵局</div>
-        <div class="chip" onclick="selectChip(this,'pay-method-chips')">中信銀行</div>
-        <div class="chip" onclick="selectChip(this,'pay-method-chips')">合作金庫</div>
-        <div class="chip" onclick="selectChip(this,'pay-method-chips')">新光銀行</div>
+        <div class="chip" onclick="selectChip(this,'pay-method-chips')">合庫</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">其他</div>
       </div>
     </div>
@@ -347,22 +344,21 @@ body{font-family:var(--font);color:var(--text);}
     </div>
     <button class="submit-btn" onclick="saveSettings()">儲存設定</button>
 
+    <div class="field-group">
+      <div class="field-label">Claude API 本月用量（估算）</div>
+      <div style="background:var(--bg2);border-radius:12px;padding:14px;border:0.5px solid var(--border);">
+        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px;">
+          <span id="token-month-display">本月 0 tokens</span>
+          <span id="token-total-display">累計 0 tokens</span>
+        </div>
+        <div style="height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;">
+          <div id="token-bar" style="height:100%;border-radius:99px;background:var(--accent);width:0%;transition:width 0.4s;"></div>
+        </div>
+        <div style="font-size:11px;color:var(--text3);margin-top:6px;" id="token-cost">估算費用：$0.000 USD</div>
+      </div>
+    </div>
     <div style="height:1px;background:var(--border);margin:4px 0;"></div>
     <button class="submit-btn" style="background:var(--bg3);color:var(--red);" onclick="clearData()">清除所有本機資料</button>
-  </div>
-</div>
-
-  <div class="field-group">
-  <div class="field-label">Claude API 本月用量（估算）</div>
-  <div style="background:var(--bg2);border-radius:12px;padding:14px;border:0.5px solid var(--border);">
-    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px;">
-      <span id="token-month-display">本月 0 tokens</span>
-      <span id="token-total-display">累計 0 tokens</span>
-    </div>
-    <div style="height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;">
-      <div id="token-bar" style="height:100%;border-radius:99px;background:var(--accent);width:0%;transition:width 0.4s;"></div>
-    </div>
-    <div style="font-size:11px;color:var(--text3);margin-top:6px;" id="token-cost">估算費用：$0.000 USD</div>
   </div>
 </div>
 
@@ -386,20 +382,13 @@ body{font-family:var(--font);color:var(--text);}
 
 <script>
 const SUB_CATS = {
-  '食':['正餐','手搖','下午茶','酒類','食材'],
+  '食':['正餐','手搖','下午茶','酒類'],
   '衣':[],
   '住':['生活用品','飯店','房租','手機費'],
   '行':['機車相關','大眾運輸'],
   '育':[],
   '樂':['月野家','遊戲課金','小說／漫畫','同人本','電影','舞台劇／音樂劇','周邊','街機'],
-  '其他':['規費','醫藥費','儲值','代墊']
-};
-const INCOME_CATS = ['被動收入','薪資','意外收入','其他'];
-const INCOME_SUB_CATS = {
-  '被動收入':['股利股息'],
-  '薪資':['薪資','獎金','加班費'],
-  '意外收入':['發票中獎','刮刮樂／樂透'],
-  '其他':['還款']
+  '其他':['規費','醫藥費','儲值']
 };
 const CAT_ICONS = {'食':'🍜','衣':'👗','住':'🏠','行':'🚌','育':'📚','樂':'🎮','其他':'📌'};
 const CAT_COLORS = ['#7c6ff7','#60a5fa','#4ade80','#fbbf24','#f87171','#a78bfa','#34d399'];
@@ -412,60 +401,35 @@ let currentFilter = '全部';
 let calcExpr = '', calcResult = '0';
 
 // ── INIT ──
-async function load() {
-  // 1. 先載入本機資料
+function load() {
   try { records = JSON.parse(localStorage.getItem('acc_records')||'[]'); } catch(e){records=[];}
-  
-  // 2. 載入設定，但 gasUrl 以程式碼內建值優先，localStorage 只覆蓋 budget 和 apiKey
-  try { 
-    const s = JSON.parse(localStorage.getItem('acc_settings')||'{}');
-    settings.budget = s.budget || settings.budget;
-    settings.apiKey = s.apiKey || settings.apiKey;
-    // gasUrl 不從 localStorage 覆蓋，保持 Actions 注入的值
-  } catch(e){}
-
-  // 3. 更新 UI 欄位
+  try { const s = JSON.parse(localStorage.getItem('acc_settings')||'{}'); settings={...settings,...s}; } catch(e){}
   document.getElementById('budget-input').value = settings.budget||20000;
   document.getElementById('apikey-input').value = settings.apiKey||'';
+  document.getElementById('gas-input').value = settings.gasUrl||'';
   if(settings.apiKey) document.getElementById('config-banner').style.display='none';
   const d = new Date();
   document.getElementById('date-input').value = d.toISOString().split('T')[0];
   const mn=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
   document.getElementById('home-month').textContent = d.getFullYear()+'年'+mn[d.getMonth()]+'月';
-  rebuildMainCats();
   updateSubCats();
-
-  // 4. 先用本機資料渲染
   renderHome();
   renderRecords();
-
-  // 5. 再從 Sheet 同步（gasUrl 此時一定是注入後的真實網址）
-  if(settings.gasUrl) {
-    try {
-      const res = await fetch(settings.gasUrl, {method:'GET'});
-      const json = await res.json();
-      if(json.transactions && json.transactions.length > 0) {
-        const localKeys = new Set(records.map(r=>`${r.date}|${r.description}|${r.amount}`));
-        const newFromSheet = json.transactions.filter(r=>!localKeys.has(`${r.date}|${r.description}|${r.amount}`));
-        if(newFromSheet.length > 0) {
-          records = [...records, ...newFromSheet];
-          localStorage.setItem('acc_records', JSON.stringify(records));
-          toast(`已從 Sheet 同步 ${newFromSheet.length} 筆`);
-        }
-        renderHome();
-        renderRecords();
-      }
-    } catch(e) {
-      console.warn('Sheet 同步失敗', e);
-    }
-  }
+  // 強制同步所有初始UI狀態
+  updateSubCats();
+  renderHome();
+  renderRecords();
+  
+  // 強制觸發主分類預設選中狀態
+  const defaultMainCat = document.querySelector('#main-cat-chips .chip.active');
+  if(defaultMainCat) updateSubCats();
 }
 
 function saveSettings() {
   settings.budget = parseInt(document.getElementById('budget-input').value)||20000;
   settings.apiKey = document.getElementById('apikey-input').value.trim();
-  settings.gasUrl = document.getElementById('gas-input').value.trim();
-  localStorage.setItem('acc_settings', JSON.stringify(settings));
+  // gasUrl 不從設定頁覆蓋，保持 Actions 注入的值
+  localStorage.setItem('acc_settings', JSON.stringify({budget: settings.budget, apiKey: settings.apiKey}));
   if(settings.apiKey) document.getElementById('config-banner').style.display='none';
   toast('設定已儲存');
   renderHome();
@@ -520,28 +484,14 @@ function getChip(groupId) {
   const a = document.getElementById(groupId)?.querySelector('.chip.active');
   return a ? a.textContent : '';
 }
-function rebuildMainCats() {
-  const type = getChip('type-chips');
-  const isIncome = type === '收入';
-  const cats = isIncome ? INCOME_CATS : CATS;
-  const mainChips = document.getElementById('main-cat-chips');
-  mainChips.innerHTML = cats.map((c,i) =>
-    `<div class="chip${i===0?' active':''}" onclick="selectChip(this,'main-cat-chips');updateSubCats()">${c}</div>`
-  ).join('');
-}
-
 function updateSubCats() {
-  const type = getChip('type-chips');
-  const isIncome = type === '收入';
-  const subMap = isIncome ? INCOME_SUB_CATS : SUB_CATS;
-  const mc = getChip('main-cat-chips');
-  const subs = subMap[mc] || [];
+  const mc = getChip('main-cat-chips') || '食';
+  const subs = SUB_CATS[mc] || [];
   const el = document.getElementById('sub-cat-chips');
-  el.innerHTML = subs.map((s,i) =>
-    `<div class="chip${i===0?' active':''}" onclick="selectChip(this,'sub-cat-chips')">${s}</div>`
-  ).join('');
+  el.innerHTML = subs.map((s,i)=>`<div class="chip${i===0?' active':''}" onclick="selectChip(this,'sub-cat-chips')">${s}</div>`).join('');
   document.getElementById('sub-cat-section').style.display = subs.length ? 'flex' : 'none';
 }
+
 // ── AI TOGGLE ──
 function toggleAI() {
   const p = document.getElementById('ai-panel');
@@ -608,33 +558,29 @@ async function submitAI() {
     parsed.forEach(r=>{ r.createdAt = new Date().toISOString(); });
     saveRecords(parsed);
     document.getElementById('ai-input').value='';
+
+    // 累計token用量（放在 try 內確保 data 存在）
+    const usage = data.usage || {};
+    const totalNew = (usage.input_tokens || 0) + (usage.output_tokens || 0);
+    let tokenLog = JSON.parse(localStorage.getItem('token_usage') || '{"total":0,"month":0,"monthKey":""}');
+    const monthKey = new Date().toISOString().slice(0,7);
+    if(tokenLog.monthKey !== monthKey) { tokenLog.month = 0; tokenLog.monthKey = monthKey; }
+    tokenLog.total += totalNew;
+    tokenLog.month += totalNew;
+    localStorage.setItem('token_usage', JSON.stringify(tokenLog));
+
   } catch(e) {
     toast('解析失敗，請再試一次');
     console.error(e);
   } finally {
     btn.disabled=false; btn.textContent='✦ AI 解析並記帳';
   }
-  // 累計token用量
-  const usage = data.usage || {};
-  const inputTokens = usage.input_tokens || 0;
-  const outputTokens = usage.output_tokens || 0;
-  const totalNew = inputTokens + outputTokens;
-  
-  let tokenLog = JSON.parse(localStorage.getItem('token_usage') || '{"total":0,"month":0,"monthKey":""}');
-  const monthKey = new Date().toISOString().slice(0,7); // "2025-01"
-  if(tokenLog.monthKey !== monthKey) {
-    tokenLog.month = 0;
-    tokenLog.monthKey = monthKey;
-  }
-  tokenLog.total += totalNew;
-  tokenLog.month += totalNew;
-  localStorage.setItem('token_usage', JSON.stringify(tokenLog));
 }
 
 // ── SAVE ──
 function saveRecords(recs) {
   records = [...records, ...recs];
-  localStorage.setItem('acc_records', JSON.stringify(records));
+  // 不寫入 localStorage，Sheet 為唯一資料來源
   if(settings.gasUrl) {
     fetch(settings.gasUrl, {
       method:'POST', mode:'no-cors',
@@ -644,6 +590,7 @@ function saveRecords(recs) {
   }
   toast('已記錄 '+recs.length+' 筆');
   renderHome();
+  renderRecords();
 }
 
 // ── HOME RENDER ──
@@ -664,12 +611,6 @@ function renderHome() {
   const bar = document.getElementById('budget-bar');
   bar.style.width = pct+'%';
   bar.className = 'progress-bar-fill'+(pct>=100?' over':pct>=80?' warn':'');
-  // 平均每日預算（第618行之後）
-  const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-  const daysLeft = daysInMonth - now.getDate() + 1; // 含今天
-  const dailyBudget = remain > 0 ? Math.floor(remain / daysLeft) : 0;
-  document.getElementById('daily-budget').textContent =
-  `每日可用 NT$${dailyBudget.toLocaleString()}（剩 ${daysLeft} 天）`;
   document.getElementById('budget-pct').textContent = '剩餘 NT$'+Math.max(0,remain).toLocaleString()+' ('+(100-pct<0?0:100-pct)+'%)';
   document.getElementById('donut-pct').textContent = pct+'%';
 
@@ -787,7 +728,7 @@ function toast(msg) {
   document.getElementById('token-cost').textContent = `估算費用：$${cost} USD`;
 }
 
-document.addEventListener('DOMContentLoaded', () => { load(); });
+load();
 </script>
 </body>
 </html>
