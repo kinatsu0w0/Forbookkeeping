@@ -29,7 +29,10 @@ body{font-family:var(--font);color:var(--text);}
   background:var(--bg);
   overflow:hidden;
 }
-
+html, body {
+  overflow-x: hidden;              /* 鐵律：禁止橫向溢出 */
+  overscroll-behavior-x: none;     /* 消除行動端橫向橡皮筋回彈 */
+}
 /* nav */
 .nav-bar{
   display:flex;background:var(--bg2);
