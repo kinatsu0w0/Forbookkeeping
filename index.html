@@ -462,12 +462,17 @@ async function load() {
 }
 
 function saveSettings() {
-  settings.budget = parseInt(document.getElementById('budget-input').value)||20000;
+  const inputBudget = parseInt(document.getElementById('budget-input').value);
+  settings.budget = isNaN(inputBudget) ? 20000 : inputBudget; // 嚴格防錯
   settings.apiKey = document.getElementById('apikey-input').value.trim();
-  settings.gasUrl = document.getElementById('gas-input').value.trim();
+  
+  // 儲存至本地快取
   localStorage.setItem('acc_settings', JSON.stringify(settings));
+  
   if(settings.apiKey) document.getElementById('config-banner').style.display='none';
   toast('設定已儲存');
+  
+  // 強制重新配置首頁與圖表
   renderHome();
 }
 
@@ -659,8 +664,8 @@ function renderHome() {
   const pct = Math.min(100, Math.round(total/budget*100));
   const remain = budget - total;
 
-  document.getElementById('spent-display').textContent = 'NT$'+total.toLocaleString();
-  document.getElementById('budget-total-display').textContent = '/ NT$'+budget.toLocaleString();
+  document.getElementById('spent-display').textContent = 'NT$' + total.toLocaleString();
+document.getElementById('budget-total-display').textContent = '/ NT$' + budget.toLocaleString();
   const bar = document.getElementById('budget-bar');
   bar.style.width = pct+'%';
   bar.className = 'progress-bar-fill'+(pct>=100?' over':pct>=80?' warn':'');
