@@ -22,16 +22,33 @@
 }
 html,body{height:100%;overflow:hidden;background:var(--bg);}
 body{font-family:var(--font);color:var(--text);}
-#app{max-width:480px;margin:0 auto;height:100dvh;display:flex;flex-direction:column;background:var(--bg);overflow:hidden;}
-.nav-bar{display:flex;background:var(--bg2);border-top:0.5px solid var(--border);padding:4px 0 env(safe-area-inset-bottom,4px);flex-shrink:0;}
+#app{
+  max-width:480px;margin:0 auto;
+  height:100dvh;
+  display:flex;flex-direction:column;
+  background:var(--bg);
+  overflow:hidden;
+}
+
+/* nav */
+.nav-bar{
+  display:flex;background:var(--bg2);
+  border-top:0.5px solid var(--border);
+  padding:4px 0 env(safe-area-inset-bottom,4px);
+  flex-shrink:0;
+}
 .nav-btn{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;cursor:pointer;border:none;background:none;color:var(--text2);font-size:10px;font-family:var(--font);transition:color 0.15s;}
 .nav-btn.active{color:var(--accent);}
 .nav-icon{font-size:20px;line-height:1;}
+
+/* pages */
 .page{display:none;flex:1;overflow-y:auto;flex-direction:column;-webkit-overflow-scrolling:touch;}
 .page.active{display:flex;}
 .page-header{padding:18px 18px 12px;flex-shrink:0;}
 .page-title{font-size:20px;font-weight:700;letter-spacing:-0.3px;}
 .page-sub{font-size:12px;color:var(--text2);margin-top:2px;}
+
+/* HOME */
 .budget-section{padding:0 16px 16px;}
 .budget-card{background:var(--bg2);border-radius:16px;padding:16px;border:0.5px solid var(--border);}
 .budget-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px;}
@@ -44,6 +61,7 @@ body{font-family:var(--font);color:var(--text);}
 .progress-bar-fill.warn{background:var(--amber);}
 .progress-bar-fill.over{background:var(--red);}
 .budget-pct{font-size:11px;color:var(--text2);margin-top:6px;text-align:right;}
+
 .donut-section{padding:0 16px 16px;display:flex;gap:12px;align-items:center;}
 .donut-wrap{position:relative;width:90px;height:90px;flex-shrink:0;}
 .donut-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
@@ -54,6 +72,7 @@ body{font-family:var(--font);color:var(--text);}
 .legend-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
 .legend-name{color:var(--text2);flex:1;}
 .legend-val{color:var(--text);font-weight:500;}
+
 .section-wrap{padding:0 16px 16px;}
 .section-label{font-size:13px;font-weight:500;margin-bottom:10px;color:var(--text2);}
 .cat-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
@@ -61,11 +80,14 @@ body{font-family:var(--font);color:var(--text);}
 .cat-icon{font-size:20px;margin-bottom:6px;}
 .cat-name{font-size:11px;color:var(--text2);}
 .cat-amt{font-size:15px;font-weight:700;margin-top:2px;}
+
 .pay-item{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--bg2);border-radius:10px;margin-bottom:6px;border:0.5px solid var(--border);}
 .pay-bar-bg{flex:1;height:5px;background:var(--bg3);border-radius:99px;overflow:hidden;}
 .pay-bar-fill{height:100%;border-radius:99px;}
 .pay-name{font-size:12px;color:var(--text2);width:90px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .pay-amt{font-size:12px;font-weight:500;min-width:60px;text-align:right;}
+
+/* ADD */
 .input-form{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px;}
 .field-label{font-size:12px;color:var(--text2);margin-bottom:5px;}
 .field-group{display:flex;flex-direction:column;}
@@ -74,6 +96,7 @@ body{font-family:var(--font);color:var(--text);}
 .chip.active{background:var(--accent);color:white;border-color:var(--accent);}
 .app-input{width:100%;background:var(--bg2);border:0.5px solid var(--border);color:var(--text);border-radius:10px;padding:11px 13px;font-size:15px;font-family:var(--font);}
 .app-input:focus{outline:none;border-color:var(--accent);}
+
 .calc-wrap{background:var(--bg2);border-radius:14px;border:0.5px solid var(--border);overflow:hidden;}
 .calc-display{padding:10px 14px;text-align:right;}
 .calc-expr{font-size:11px;color:var(--text3);min-height:16px;}
@@ -85,12 +108,16 @@ body{font-family:var(--font);color:var(--text);}
 .calc-btn.eq{background:var(--accent);color:white;}
 .calc-btn.eq:active{background:#6358d4;}
 .calc-btn.clr{color:var(--red);}
+
 .submit-row{display:flex;gap:8px;}
 .submit-btn{flex:1;padding:14px;background:var(--accent);color:white;border:none;border-radius:12px;font-size:15px;font-weight:700;font-family:var(--font);cursor:pointer;transition:opacity 0.15s;}
 .submit-btn:active{opacity:0.75;}
 .submit-btn:disabled{opacity:0.4;cursor:not-allowed;}
 .submit-btn.secondary{background:var(--bg3);color:var(--text2);}
+
 .config-banner{margin:0 16px 8px;padding:10px 14px;background:#1e1a3a;border-radius:10px;font-size:12px;color:var(--accent2);line-height:1.6;border:0.5px solid var(--accent3);}
+
+/* RECORDS */
 .rec-filters{padding:0 16px 12px;display:flex;gap:6px;overflow-x:auto;flex-shrink:0;}
 .rec-filters::-webkit-scrollbar{display:none;}
 .filter-chip{flex-shrink:0;padding:6px 13px;border-radius:99px;border:0.5px solid var(--border);background:var(--bg2);color:var(--text2);font-size:13px;cursor:pointer;font-family:var(--font);}
@@ -105,9 +132,22 @@ body{font-family:var(--font);color:var(--text);}
 .rec-tags{display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;}
 .rec-tag{font-size:10px;padding:2px 8px;border-radius:99px;background:var(--accent3);color:var(--accent2);}
 .rec-note{background:#1e2a1e;color:var(--green);}
+
+/* SETTINGS */
 .settings-section{padding:0 16px 16px;display:flex;flex-direction:column;gap:12px;}
-.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--bg3);color:var(--text);padding:10px 22px;border-radius:99px;font-size:13px;opacity:0;transition:opacity 0.2s;z-index:100;border:0.5px solid var(--border);white-space:nowrap;pointer-events:none;}
+
+/* toast */
+.toast{
+  position:fixed;bottom:90px;left:50%;transform:translateX(-50%);
+  background:var(--bg3);color:var(--text);
+  padding:10px 22px;border-radius:99px;font-size:13px;
+  opacity:0;transition:opacity 0.2s;
+  z-index:100;border:0.5px solid var(--border);
+  white-space:nowrap;pointer-events:none;
+}
 .toast.show{opacity:1;}
+
+/* scrollbar */
 ::-webkit-scrollbar{width:2px;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
 </style>
@@ -121,6 +161,7 @@ body{font-family:var(--font);color:var(--text);}
     <div class="page-title" id="home-month">記帳本</div>
     <div class="page-sub">本月總覽</div>
   </div>
+
   <div class="budget-section">
     <div class="budget-card">
       <div class="budget-row">
@@ -135,6 +176,7 @@ body{font-family:var(--font);color:var(--text);}
       <div id="daily-budget" style="font-size:11px;color:var(--text2);margin-top:3px;text-align:right;"></div>
     </div>
   </div>
+
   <div class="donut-section">
     <div class="donut-wrap">
       <svg viewBox="0 0 90 90" width="90" height="90" id="donut-svg"></svg>
@@ -145,10 +187,12 @@ body{font-family:var(--font);color:var(--text);}
     </div>
     <div class="donut-legend" id="donut-legend"></div>
   </div>
+
   <div class="section-wrap">
     <div class="section-label">各分類本月支出</div>
     <div class="cat-grid" id="cat-grid"></div>
   </div>
+
   <div class="section-wrap">
     <div class="section-label">消費方式累計</div>
     <div id="pay-list"></div>
@@ -161,6 +205,7 @@ body{font-family:var(--font);color:var(--text);}
     <div class="page-title">手動記帳</div>
   </div>
   <div class="config-banner" id="config-banner">⚙️ 請至「設定」填入 Claude API Key，才能使用 AI 解析功能。</div>
+
   <div class="input-form">
     <div class="field-group">
       <div class="field-label">金額（計算機）</div>
@@ -193,6 +238,7 @@ body{font-family:var(--font);color:var(--text);}
         </div>
       </div>
     </div>
+
     <div class="field-group">
       <div class="field-label">交易類型</div>
       <div class="chip-row" id="type-chips">
@@ -200,14 +246,25 @@ body{font-family:var(--font);color:var(--text);}
         <div class="chip" onclick="selectChip(this,'type-chips');rebuildMainCats();updateSubCats()">收入</div>
       </div>
     </div>
+
     <div class="field-group">
       <div class="field-label">主分類</div>
-      <div class="chip-row" id="main-cat-chips"></div>
+      <div class="chip-row" id="main-cat-chips">
+        <div class="chip active" onclick="selectChip(this,'main-cat-chips');updateSubCats()">食</div>
+        <div class="chip" onclick="selectChip(this,'main-cat-chips');updateSubCats()">衣</div>
+        <div class="chip" onclick="selectChip(this,'main-cat-chips');updateSubCats()">住</div>
+        <div class="chip" onclick="selectChip(this,'main-cat-chips');updateSubCats()">行</div>
+        <div class="chip" onclick="selectChip(this,'main-cat-chips');updateSubCats()">育</div>
+        <div class="chip" onclick="selectChip(this,'main-cat-chips');updateSubCats()">樂</div>
+        <div class="chip" onclick="selectChip(this,'main-cat-chips');updateSubCats()">其他</div>
+      </div>
     </div>
+
     <div class="field-group" id="sub-cat-section">
       <div class="field-label">子分類</div>
       <div class="chip-row" id="sub-cat-chips"></div>
     </div>
+
     <div class="field-group">
       <div class="field-label">付款方式</div>
       <div class="chip-row" id="pay-method-chips">
@@ -215,34 +272,41 @@ body{font-family:var(--font);color:var(--text);}
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">台新信用卡</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">玉山信用卡</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">現金</div>
-        <div class="chip" onclick="selectChip(this,'pay-method-chips')">台新</div>
+        <div class="chip" onclick="selectChip(this,'pay-method-chips')">台新銀行</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">郵局</div>
-        <div class="chip" onclick="selectChip(this,'pay-method-chips')">合庫</div>
+        <div class="chip" onclick="selectChip(this,'pay-method-chips')">中信銀行</div>
+        <div class="chip" onclick="selectChip(this,'pay-method-chips')">合作金庫</div>
+        <div class="chip" onclick="selectChip(this,'pay-method-chips')">新光銀行</div>
         <div class="chip" onclick="selectChip(this,'pay-method-chips')">其他</div>
       </div>
     </div>
+
     <div class="field-group">
       <div class="field-label">消費說明</div>
       <input class="app-input" id="desc-input" type="text" placeholder="店名、用途或事件簡述">
     </div>
+
     <div class="field-group">
       <div class="field-label">備註（選填）</div>
       <input class="app-input" id="note-input" type="text" placeholder="特殊情況、外幣資訊等">
     </div>
+
     <div class="field-group">
       <div class="field-label">日期</div>
       <input class="app-input" id="date-input" type="date">
     </div>
+
     <div class="submit-row">
       <button class="submit-btn" onclick="submitManual()">✓ 記帳</button>
       <button class="submit-btn secondary" onclick="toggleAI()">✦ AI 輸入</button>
     </div>
-    <div id="ai-panel" style="display:none;flex-direction:column;gap:8px;">
-      <div class="field-group">
+
+    <div id="ai-panel" style="display:none;">
+      <div class="field-group" style="margin-top:4px;">
         <div class="field-label">自然語言輸入</div>
         <textarea class="app-input" id="ai-input" style="min-height:70px;resize:none;" placeholder="例：午餐拉麵180，下午台新信用卡買咖啡80"></textarea>
       </div>
-      <button class="submit-btn" id="ai-submit-btn" onclick="submitAI()">✦ AI 解析並記帳</button>
+      <button class="submit-btn" style="margin-top:8px;width:100%;" id="ai-submit-btn" onclick="submitAI()">✦ AI 解析並記帳</button>
     </div>
   </div>
 </div>
@@ -253,7 +317,7 @@ body{font-family:var(--font);color:var(--text);}
     <div class="page-title">記帳紀錄</div>
     <div class="page-sub" id="rec-subtitle">全部</div>
   </div>
-  <div class="rec-filters">
+  <div class="rec-filters" id="rec-filters">
     <div class="filter-chip active" onclick="filterRecs('全部',this)">全部</div>
     <div class="filter-chip" onclick="filterRecs('食',this)">食</div>
     <div class="filter-chip" onclick="filterRecs('衣',this)">衣</div>
@@ -282,42 +346,53 @@ body{font-family:var(--font);color:var(--text);}
       <input class="app-input" id="apikey-input" type="password" placeholder="sk-ant-...">
     </div>
     <button class="submit-btn" onclick="saveSettings()">儲存設定</button>
-    <div class="field-group">
-      <div class="field-label">Claude API 本月用量（估算）</div>
-      <div style="background:var(--bg2);border-radius:12px;padding:14px;border:0.5px solid var(--border);">
-        <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px;">
-          <span id="token-month-display">本月 0 tokens</span>
-          <span id="token-total-display">累計 0 tokens</span>
-        </div>
-        <div style="height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;">
-          <div id="token-bar" style="height:100%;border-radius:99px;background:var(--accent);width:0%;transition:width 0.4s;"></div>
-        </div>
-        <div style="font-size:11px;color:var(--text3);margin-top:6px;" id="token-cost">估算費用：$0.000 USD</div>
-      </div>
-    </div>
+
     <div style="height:1px;background:var(--border);margin:4px 0;"></div>
     <button class="submit-btn" style="background:var(--bg3);color:var(--red);" onclick="clearData()">清除所有本機資料</button>
   </div>
 </div>
 
+  <div class="field-group">
+  <div class="field-label">Claude API 本月用量（估算）</div>
+  <div style="background:var(--bg2);border-radius:12px;padding:14px;border:0.5px solid var(--border);">
+    <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:8px;">
+      <span id="token-month-display">本月 0 tokens</span>
+      <span id="token-total-display">累計 0 tokens</span>
+    </div>
+    <div style="height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;">
+      <div id="token-bar" style="height:100%;border-radius:99px;background:var(--accent);width:0%;transition:width 0.4s;"></div>
+    </div>
+    <div style="font-size:11px;color:var(--text3);margin-top:6px;" id="token-cost">估算費用：$0.000 USD</div>
+  </div>
+</div>
+
 <!-- NAV BAR -->
 <div class="nav-bar">
-  <button class="nav-btn active" onclick="showPage('home',this)"><div class="nav-icon">◎</div><span>總覽</span></button>
-  <button class="nav-btn" onclick="showPage('add',this)"><div class="nav-icon">＋</div><span>記帳</span></button>
-  <button class="nav-btn" onclick="showPage('records',this)"><div class="nav-icon">≡</div><span>紀錄</span></button>
-  <button class="nav-btn" onclick="showPage('settings',this)"><div class="nav-icon">⚙</div><span>設定</span></button>
+  <button class="nav-btn active" onclick="showPage('home',this)">
+    <div class="nav-icon">◎</div><span>總覽</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('add',this)">
+    <div class="nav-icon">＋</div><span>記帳</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('records',this)">
+    <div class="nav-icon">≡</div><span>紀錄</span>
+  </button>
+  <button class="nav-btn" onclick="showPage('settings',this)">
+    <div class="nav-icon">⚙</div><span>設定</span>
+  </button>
 </div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 const SUB_CATS = {
-  '食':['正餐','手搖','下午茶','酒類'],
+  '食':['正餐','手搖','下午茶','酒類','食材'],
   '衣':[],
   '住':['生活用品','飯店','房租','手機費'],
   '行':['機車相關','大眾運輸'],
   '育':[],
   '樂':['月野家','遊戲課金','小說／漫畫','同人本','電影','舞台劇／音樂劇','周邊','街機'],
-  '其他':['規費','醫藥費','儲值']
+  '其他':['規費','醫藥費','儲值','代墊']
 };
 const INCOME_CATS = ['被動收入','薪資','意外收入','其他'];
 const INCOME_SUB_CATS = {
@@ -338,39 +413,45 @@ let calcExpr = '', calcResult = '0';
 
 // ── INIT ──
 async function load() {
-  // 1. 載入設定（gasUrl 不從 localStorage 覆蓋）
-  try {
+  // 1. 先載入本機資料
+  try { records = JSON.parse(localStorage.getItem('acc_records')||'[]'); } catch(e){records=[];}
+  
+  // 2. 載入設定，但 gasUrl 以程式碼內建值優先，localStorage 只覆蓋 budget 和 apiKey
+  try { 
     const s = JSON.parse(localStorage.getItem('acc_settings')||'{}');
     settings.budget = s.budget || settings.budget;
     settings.apiKey = s.apiKey || settings.apiKey;
+    // gasUrl 不從 localStorage 覆蓋，保持 Actions 注入的值
   } catch(e){}
 
-  // 2. 更新 UI 欄位
-  document.getElementById('budget-input').value = settings.budget || 20000;
-  document.getElementById('apikey-input').value = settings.apiKey || '';
-  if(settings.apiKey) document.getElementById('config-banner').style.display = 'none';
+  // 3. 更新 UI 欄位
+  document.getElementById('budget-input').value = settings.budget||20000;
+  document.getElementById('apikey-input').value = settings.apiKey||'';
+  if(settings.apiKey) document.getElementById('config-banner').style.display='none';
   const d = new Date();
   document.getElementById('date-input').value = d.toISOString().split('T')[0];
-  const mn = ['一','二','三','四','五','六','七','八','九','十','十一','十二'];
+  const mn=['一','二','三','四','五','六','七','八','九','十','十一','十二'];
   document.getElementById('home-month').textContent = d.getFullYear()+'年'+mn[d.getMonth()]+'月';
-
-  // 3. 初始化分類 chip
   rebuildMainCats();
   updateSubCats();
 
-  // 4. 先用空資料渲染（避免畫面空白）
+  // 4. 先用本機資料渲染
   renderHome();
   renderRecords();
 
-  // 5. 從 Sheet 載入資料
-  const gasUrl = '__GAS_URL__';
-  if(gasUrl && gasUrl !== '__GAS_URL__') {
+  // 5. 再從 Sheet 同步（gasUrl 此時一定是注入後的真實網址）
+  if(settings.gasUrl) {
     try {
-      const res = await fetch(gasUrl, {method:'GET'});
+      const res = await fetch(settings.gasUrl, {method:'GET'});
       const json = await res.json();
       if(json.transactions && json.transactions.length > 0) {
-        records = json.transactions;
-        toast('已載入 '+records.length+' 筆資料');
+        const localKeys = new Set(records.map(r=>`${r.date}|${r.description}|${r.amount}`));
+        const newFromSheet = json.transactions.filter(r=>!localKeys.has(`${r.date}|${r.description}|${r.amount}`));
+        if(newFromSheet.length > 0) {
+          records = [...records, ...newFromSheet];
+          localStorage.setItem('acc_records', JSON.stringify(records));
+          toast(`已從 Sheet 同步 ${newFromSheet.length} 筆`);
+        }
         renderHome();
         renderRecords();
       }
@@ -383,9 +464,9 @@ async function load() {
 function saveSettings() {
   settings.budget = parseInt(document.getElementById('budget-input').value)||20000;
   settings.apiKey = document.getElementById('apikey-input').value.trim();
-  // gasUrl 不儲存，保持 Actions 注入的值
-  localStorage.setItem('acc_settings', JSON.stringify({budget:settings.budget, apiKey:settings.apiKey}));
-  if(settings.apiKey) document.getElementById('config-banner').style.display = 'none';
+  settings.gasUrl = document.getElementById('gas-input').value.trim();
+  localStorage.setItem('acc_settings', JSON.stringify(settings));
+  if(settings.apiKey) document.getElementById('config-banner').style.display='none';
   toast('設定已儲存');
   renderHome();
 }
@@ -405,7 +486,7 @@ function showPage(id, btn) {
   document.getElementById('page-'+id).classList.add('active');
   btn.classList.add('active');
   if(id==='records') renderRecords();
-  if(id==='settings') renderTokenUsage();
+  if(id === 'settings') renderTokenUsage();
 }
 
 // ── CALCULATOR ──
@@ -440,32 +521,38 @@ function getChip(groupId) {
   return a ? a.textContent : '';
 }
 function rebuildMainCats() {
-  const isIncome = getChip('type-chips') === '收入';
+  const type = getChip('type-chips');
+  const isIncome = type === '收入';
   const cats = isIncome ? INCOME_CATS : CATS;
-  document.getElementById('main-cat-chips').innerHTML = cats.map((c,i)=>
+  const mainChips = document.getElementById('main-cat-chips');
+  mainChips.innerHTML = cats.map((c,i) =>
     `<div class="chip${i===0?' active':''}" onclick="selectChip(this,'main-cat-chips');updateSubCats()">${c}</div>`
   ).join('');
 }
+
 function updateSubCats() {
-  const isIncome = getChip('type-chips') === '收入';
+  const type = getChip('type-chips');
+  const isIncome = type === '收入';
   const subMap = isIncome ? INCOME_SUB_CATS : SUB_CATS;
   const mc = getChip('main-cat-chips');
   const subs = subMap[mc] || [];
-  document.getElementById('sub-cat-chips').innerHTML = subs.map((s,i)=>
+  const el = document.getElementById('sub-cat-chips');
+  el.innerHTML = subs.map((s,i) =>
     `<div class="chip${i===0?' active':''}" onclick="selectChip(this,'sub-cat-chips')">${s}</div>`
   ).join('');
   document.getElementById('sub-cat-section').style.display = subs.length ? 'flex' : 'none';
 }
-
 // ── AI TOGGLE ──
 function toggleAI() {
   const p = document.getElementById('ai-panel');
   p.style.display = p.style.display==='none' ? 'flex' : 'none';
+  p.style.flexDirection = 'column';
 }
 
 // ── SUBMIT MANUAL ──
 function submitManual() {
-  const amt = parseFloat(calcResult.replace(/,/g,''));
+  const raw = calcResult.replace(/,/g,'');
+  const amt = parseFloat(raw);
   if(!amt || isNaN(amt) || amt<=0) { toast('請輸入有效金額'); return; }
   const desc = document.getElementById('desc-input').value.trim();
   if(!desc) { toast('請填寫消費說明'); return; }
@@ -482,6 +569,7 @@ function submitManual() {
     createdAt: new Date().toISOString()
   };
   saveRecords([rec]);
+  // reset
   calcExpr=''; calcResult='0';
   document.getElementById('calc-val').textContent='0';
   document.getElementById('calc-expr').textContent='';
@@ -510,7 +598,7 @@ async function submitAI() {
         model: 'claude-sonnet-4-20250514',
         max_tokens: 1000,
         system: `你是記帳助理。解析消費描述，回傳JSON陣列，只回傳JSON不要其他文字：
-[{"date":"${today}","transactionType":"支出","mainCategory":"食|衣|住|行|育|樂|其他","subCategory":"正餐|手搖|下午茶|酒類|機車相關|醫藥費|儲值|大眾運輸|遊戲課金|小說／漫畫|同人本|月野家","description":"說明","amount":數字,"paymentMethod":"中信信用卡|台新信用卡|玉山信用卡|現金|台新|郵局|合庫|其他","note":"","tag":""}]`,
+[{"date":"${today}","transactionType":"支出","mainCategory":"食|衣|住|行|育|樂|其他","subCategory":"正餐|手搖|下午茶|酒類|機車相關|醫藥費|儲值|大眾運輸|遊戲課金|小說／漫畫|同人本|月野家|","description":"說明","amount":數字,"paymentMethod":"中信信用卡|台新信用卡|玉山信用卡|現金|台新|郵局|合庫|其他","note":"","tag":""}]`,
         messages: [{role:'user',content:text}]
       })
     });
@@ -520,32 +608,35 @@ async function submitAI() {
     parsed.forEach(r=>{ r.createdAt = new Date().toISOString(); });
     saveRecords(parsed);
     document.getElementById('ai-input').value='';
-
-    // 累計 token 用量
-    const usage = data.usage || {};
-    const totalNew = (usage.input_tokens||0) + (usage.output_tokens||0);
-    let tokenLog = JSON.parse(localStorage.getItem('token_usage')||'{"total":0,"month":0,"monthKey":""}');
-    const monthKey = new Date().toISOString().slice(0,7);
-    if(tokenLog.monthKey !== monthKey) { tokenLog.month=0; tokenLog.monthKey=monthKey; }
-    tokenLog.total += totalNew;
-    tokenLog.month += totalNew;
-    localStorage.setItem('token_usage', JSON.stringify(tokenLog));
-
   } catch(e) {
     toast('解析失敗，請再試一次');
     console.error(e);
   } finally {
     btn.disabled=false; btn.textContent='✦ AI 解析並記帳';
   }
+  // 累計token用量
+  const usage = data.usage || {};
+  const inputTokens = usage.input_tokens || 0;
+  const outputTokens = usage.output_tokens || 0;
+  const totalNew = inputTokens + outputTokens;
+  
+  let tokenLog = JSON.parse(localStorage.getItem('token_usage') || '{"total":0,"month":0,"monthKey":""}');
+  const monthKey = new Date().toISOString().slice(0,7); // "2025-01"
+  if(tokenLog.monthKey !== monthKey) {
+    tokenLog.month = 0;
+    tokenLog.monthKey = monthKey;
+  }
+  tokenLog.total += totalNew;
+  tokenLog.month += totalNew;
+  localStorage.setItem('token_usage', JSON.stringify(tokenLog));
 }
 
 // ── SAVE ──
 function saveRecords(recs) {
   records = [...records, ...recs];
-  // 不寫入 localStorage，Sheet 為唯一資料來源
-  const gasUrl = '__GAS_URL__';
-  if(gasUrl && gasUrl !== '__GAS_URL__') {
-    fetch(gasUrl, {
+  localStorage.setItem('acc_records', JSON.stringify(records));
+  if(settings.gasUrl) {
+    fetch(settings.gasUrl, {
       method:'POST', mode:'no-cors',
       headers:{'Content-Type':'application/json'},
       body: JSON.stringify({transactions: recs})
@@ -553,7 +644,6 @@ function saveRecords(recs) {
   }
   toast('已記錄 '+recs.length+' 筆');
   renderHome();
-  renderRecords();
 }
 
 // ── HOME RENDER ──
@@ -574,13 +664,13 @@ function renderHome() {
   const bar = document.getElementById('budget-bar');
   bar.style.width = pct+'%';
   bar.className = 'progress-bar-fill'+(pct>=100?' over':pct>=80?' warn':'');
-  document.getElementById('budget-pct').textContent = '剩餘 NT$'+Math.max(0,remain).toLocaleString()+' ('+(100-pct<0?0:100-pct)+'%)';
-
-  // 平均每日預算
+  // 平均每日預算（第618行之後）
   const daysInMonth = new Date(now.getFullYear(), now.getMonth()+1, 0).getDate();
-  const daysLeft = daysInMonth - now.getDate() + 1;
+  const daysLeft = daysInMonth - now.getDate() + 1; // 含今天
   const dailyBudget = remain > 0 ? Math.floor(remain / daysLeft) : 0;
-  document.getElementById('daily-budget').textContent = '每日可用 NT$'+dailyBudget.toLocaleString()+'（剩 '+daysLeft+' 天）';
+  document.getElementById('daily-budget').textContent =
+  `每日可用 NT$${dailyBudget.toLocaleString()}（剩 ${daysLeft} 天）`;
+  document.getElementById('budget-pct').textContent = '剩餘 NT$'+Math.max(0,remain).toLocaleString()+' ('+(100-pct<0?0:100-pct)+'%)';
   document.getElementById('donut-pct').textContent = pct+'%';
 
   // donut chart
@@ -609,19 +699,24 @@ function renderHome() {
   }
   svg.innerHTML = paths;
 
-  document.getElementById('donut-legend').innerHTML = nonZero.slice(0,5).map(c=>
+  const leg = document.getElementById('donut-legend');
+  leg.innerHTML = nonZero.slice(0,5).map(c=>
     `<div class="legend-row"><div class="legend-dot" style="background:${CAT_COLORS[CATS.indexOf(c)]}"></div><div class="legend-name">${c}</div><div class="legend-val">NT$${catTotals[c].toLocaleString()}</div></div>`
   ).join('');
 
-  document.getElementById('cat-grid').innerHTML = CATS.map((c,i)=>
+  // cat grid
+  const grid = document.getElementById('cat-grid');
+  grid.innerHTML = CATS.map((c,i)=>
     `<div class="cat-card"><div class="cat-icon">${CAT_ICONS[c]}</div><div class="cat-name">${c}</div><div class="cat-amt" style="color:${CAT_COLORS[i]}">NT$${(catTotals[c]||0).toLocaleString()}</div></div>`
   ).join('');
 
+  // payment methods
   const payMap = {};
   thisMonth.forEach(r=>{ const p=r.paymentMethod||'其他'; payMap[p]=(payMap[p]||0)+(r.amount||0); });
   const payArr = Object.entries(payMap).sort((a,b)=>b[1]-a[1]);
   const maxPay = payArr[0]?.[1]||1;
-  document.getElementById('pay-list').innerHTML = payArr.length
+  const payList = document.getElementById('pay-list');
+  payList.innerHTML = payArr.length
     ? payArr.map(([p,a],i)=>
         `<div class="pay-item"><div class="pay-name">${p}</div><div class="pay-bar-bg"><div class="pay-bar-fill" style="width:${Math.round(a/maxPay*100)}%;background:${PAY_COLORS[i%PAY_COLORS.length]}"></div></div><div class="pay-amt">NT$${a.toLocaleString()}</div></div>`
       ).join('')
@@ -636,10 +731,14 @@ function filterRecs(f, el) {
   document.getElementById('rec-subtitle').textContent = f;
   renderRecords();
 }
+
 function renderRecords() {
-  let filtered = currentFilter==='全部' ? [...records]
-    : currentFilter==='收入' ? records.filter(r=>r.transactionType==='收入')
-    : records.filter(r=>r.mainCategory===currentFilter);
+  let filtered = currentFilter==='全部'
+    ? [...records]
+    : currentFilter==='收入'
+      ? records.filter(r=>r.transactionType==='收入')
+      : records.filter(r=>r.mainCategory===currentFilter);
+
   const list = document.getElementById('rec-list');
   if(!filtered.length) {
     list.innerHTML='<div style="color:var(--text3);font-size:13px;text-align:center;padding:40px 0;">尚無記錄</div>';
@@ -662,22 +761,6 @@ function renderRecords() {
   ).join('');
 }
 
-// ── TOKEN USAGE ──
-function renderTokenUsage() {
-  const MONTH_LIMIT = 50000;
-  const COST_PER_TOKEN = 0.000005;
-  let tokenLog = JSON.parse(localStorage.getItem('token_usage')||'{"total":0,"month":0,"monthKey":""}');
-  const monthKey = new Date().toISOString().slice(0,7);
-  if(tokenLog.monthKey !== monthKey) tokenLog.month = 0;
-  const pct = Math.min(100, Math.round(tokenLog.month / MONTH_LIMIT * 100));
-  const cost = (tokenLog.total * COST_PER_TOKEN).toFixed(3);
-  document.getElementById('token-month-display').textContent = '本月 '+tokenLog.month.toLocaleString()+' tokens';
-  document.getElementById('token-total-display').textContent = '累計 '+tokenLog.total.toLocaleString()+' tokens';
-  document.getElementById('token-bar').style.width = pct+'%';
-  document.getElementById('token-bar').style.background = pct>80?'var(--red)':pct>60?'var(--amber)':'var(--accent)';
-  document.getElementById('token-cost').textContent = '估算費用：$'+cost+' USD';
-}
-
 // ── TOAST ──
 function toast(msg) {
   const t = document.getElementById('toast');
@@ -685,8 +768,26 @@ function toast(msg) {
   t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2500);
 }
+  function renderTokenUsage() {
+  const MONTH_LIMIT = 50000; // 自行設定警示上限
+  // claude-sonnet 約 $3/MTok input, $15/MTok output（粗估平均$5/MTok）
+  const COST_PER_TOKEN = 0.000005;
 
-document.addEventListener('DOMContentLoaded', ()=>{ load(); });
+  let tokenLog = JSON.parse(localStorage.getItem('token_usage') || '{"total":0,"month":0,"monthKey":""}');
+  const monthKey = new Date().toISOString().slice(0,7);
+  if(tokenLog.monthKey !== monthKey) tokenLog.month = 0;
+
+  const pct = Math.min(100, Math.round(tokenLog.month / MONTH_LIMIT * 100));
+  const cost = (tokenLog.total * COST_PER_TOKEN).toFixed(3);
+
+  document.getElementById('token-month-display').textContent = `本月 ${tokenLog.month.toLocaleString()} tokens`;
+  document.getElementById('token-total-display').textContent = `累計 ${tokenLog.total.toLocaleString()} tokens`;
+  document.getElementById('token-bar').style.width = pct + '%';
+  document.getElementById('token-bar').style.background = pct > 80 ? 'var(--red)' : pct > 60 ? 'var(--amber)' : 'var(--accent)';
+  document.getElementById('token-cost').textContent = `估算費用：$${cost} USD`;
+}
+
+document.addEventListener('DOMContentLoaded', () => { load(); });
 </script>
 </body>
 </html>
